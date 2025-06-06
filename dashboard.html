@@ -1,0 +1,95 @@
+<!-- File: templates/dashboard.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Chess AI - Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script>
+      function onChangeOption() {
+        const option = document.getElementById('change_option').value;
+        document.getElementById('group_current_pw').style.display = 'none';
+        document.getElementById('group_name').style.display = 'none';
+        document.getElementById('group_email').style.display = 'none';
+        document.getElementById('group_password').style.display = 'none';
+
+        if (option === 'name') {
+          document.getElementById('group_name').style.display = 'block';
+        }
+        else if (option === 'email') {
+          document.getElementById('group_email').style.display = 'block';
+        }
+        else if (option === 'password') {
+          document.getElementById('group_current_pw').style.display = 'block';
+          document.getElementById('group_password').style.display = 'block';
+        }
+      }
+
+      window.addEventListener('DOMContentLoaded', onChangeOption);
+    </script>
+</head>
+<body>
+<div class="page-container">
+    <h1 class="page-title">Welcome to Chess with AI</h1>
+
+    <div class="card-container user-info-card">
+        <p><strong>Name:</strong> {{ user.name }}</p>
+        <p><strong>Email:</strong> {{ user.email }}</p>
+        <p><strong>Games Played:</strong> {{ user.games_played }}</p>
+        <p><strong>Games Won:</strong> {{ user.games_won }}</p>
+        <p><strong>Games Lost:</strong> {{ user.games_lost }}</p>
+        <p><strong>Winning Percentage:</strong>
+            {% if user.games_played != 0 %}
+                {{ ((user.games_won / user.games_played) * 100)|round(2) }}%
+            {% else %}
+                0%
+            {% endif %}
+        </p>
+    </div>
+
+    <div class="card-container settings-card">
+        <h2>Change Name, Email, or Password</h2>
+        <form method="POST">
+            <div class="form-group">
+                <label for="change_option">What would you like to change?</label>
+                <select id="change_option" name="change_option" onchange="onChangeOption()">
+                    <option value="">-- Select --</option>
+                    <option value="name">Name</option>
+                    <option value="email">Email</option>
+                    <option value="password">Password</option>
+                </select>
+            </div>
+
+            <div class="form-group" id="group_current_pw" style="display:none;">
+                <label>Current Password:</label>
+                <input type="password" name="current_password" autocomplete="new-password">
+            </div>
+
+            <div class="form-group" id="group_name" style="display:none;">
+                <label>New Name:</label>
+                <input type="text" name="new_name">
+            </div>
+
+            <div class="form-group" id="group_email" style="display:none;">
+                <label>New Email:</label>
+                <input type="email" name="new_email">
+            </div>
+
+            <div class="form-group" id="group_password" style="display:none;">
+                <label>New Password:</label>
+                <input type="password" name="new_password" autocomplete="new-password">
+            </div>
+
+            <button type="submit" class="btn btn-action">Update</button>
+        </form>
+    </div>
+
+    <div class="nav-links">
+        <a href="{{ url_for('select_level') }}" class="btn btn-primary">Play vs AI</a>
+        <a href="{{ url_for('play_pvp') }}" class="btn btn-primary">Play vs Player</a>
+        <a href="{{ url_for('logout') }}" class="btn btn-logout">Logout</a>
+    </div>
+</div>
+</body>
+</html>

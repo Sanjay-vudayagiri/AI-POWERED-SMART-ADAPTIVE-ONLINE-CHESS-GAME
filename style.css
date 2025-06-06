@@ -1,0 +1,181 @@
+/* File: static/css/style.css */
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    background: #0f172a;
+    color: #f0f4f8;
+}
+
+.page-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 30px 20px;
+}
+
+.page-title {
+    text-align: center;
+    font-size: 2.2rem;
+    margin-bottom: 30px;
+    letter-spacing: 1px;
+}
+
+.card-container {
+    background-color: #1e293b;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="password"],
+select {
+    width: 100%;
+    padding: 10px;
+    border-radius: 6px;
+    border: none;
+    outline: none;
+    font-size: 1rem;
+}
+
+.btn {
+    display: inline-block;
+    padding: 10px 18px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    text-decoration: none;
+    margin-right: 10px;
+    margin-top: 5px;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+    color: #fff;
+    background-color: #3b82f6;
+}
+
+.btn:hover {
+    transform: scale(1.02);
+}
+
+.btn-action {
+    background-color: #6366f1;
+}
+
+.btn-action:hover {
+    background-color: #818cf8;
+}
+
+.btn-primary {
+    background-color: #059669;
+}
+
+.btn-primary:hover {
+    background-color: #10b981;
+}
+
+.btn-logout {
+    background-color: #dc2626;
+}
+
+.btn-logout:hover {
+    background-color: #ef4444;
+}
+
+.nav-links {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.user-info-card p {
+    margin: 5px 0;
+    line-height: 1.4;
+}
+
+.chess-container {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.chessboard {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: repeat(8, 1fr);
+    max-width: 600px;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border: 2px solid #333;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.square {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.light-square {
+    background-color: #eaecef;
+}
+
+.dark-square {
+    background-color: #95a5a6;
+}
+
+.square img {
+    max-width: 80%;
+    height: auto;
+}
+
+.side-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.move-panel {
+    width: 240px;
+}
+
+.piece-info-panel {
+    width: 240px;
+    background-color: #1e293b;
+    border-radius: 12px;
+    padding: 20px;
+    color: #f0f4f8;
+}
+
+.piece-info-panel h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.piece-info-panel p {
+    margin: 4px 0;
+    font-size: 0.95rem;
+    line-height: 1.4;
+}
+
+/* Highlights */
+.selected-square {
+    outline: 3px solid rgba(0, 255, 0, 0.8);
+    outline-offset: -3px;
+}
+
+.highlight-square {
+    box-shadow: inset 0 0 0 4px rgba(255, 255, 0, 0.6);
+}

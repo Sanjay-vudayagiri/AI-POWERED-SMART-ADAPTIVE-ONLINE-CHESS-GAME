@@ -1,0 +1,63 @@
+<!-- File: templates/admin_dashboard.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<div class="page-container">
+    <h1 class="page-title">Admin Dashboard</h1>
+
+    <div class="card-container" style="overflow-x:auto;">
+        <h2>All Users</h2>
+        <!-- If there's a flashed message (e.g. "Deleted user..."), show an alert. -->
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <script>alert("{{ messages[0] }}");</script>
+          {% endif %}
+        {% endwith %}
+
+        <table style="width: 100%; border-collapse: collapse;">
+            <thead>
+                <tr style="text-align:left;">
+                    <th>Email</th>
+                    <th>Name</th>
+                    <th>Games Played</th>
+                    <th>Games Won</th>
+                    <th>Games Lost</th>
+                    <th>Unlocked Level</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in user_list %}
+                <tr style="border-bottom: 1px solid #ccc;">
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.name }}</td>
+                    <td>{{ user.games_played }}</td>
+                    <td>{{ user.games_won }}</td>
+                    <td>{{ user.games_lost }}</td>
+                    <td>{{ user.unlocked_level }}</td>
+                    <td>
+                        <!-- Link calls /admin_delete_user/<email> -->
+                        <a href="{{ url_for('admin_delete_user', email=user.email) }}"
+                           class="btn btn-action"
+                           onclick="return confirm('Are you sure you want to delete {{ user.email }}?');">
+                           Delete
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div style="margin-top:20px;">
+        <a href="{{ url_for('logout') }}" class="btn btn-logout">Logout (Admin)</a>
+    </div>
+</div>
+</body>
+</html>

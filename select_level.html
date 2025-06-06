@@ -1,0 +1,31 @@
+<!-- File: templates/select_level.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Select AI Level</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<div class="page-container">
+    <h1 class="page-title">Choose Your AI Level</h1>
+    <div class="card-container" style="max-width:400px; margin:auto;">
+        <form method="POST" action="{{ url_for('select_level') }}">
+            <p>Your highest unlocked level is <strong>{{ unlocked_level }}</strong>.</p>
+            <p>Select any level from 1 to {{ unlocked_level }}:</p>
+            <div class="form-group">
+                <label for="chosen_level">AI Level</label>
+                <select name="chosen_level" id="chosen_level" required>
+                    {% for lvl in range(1, unlocked_level + 1) %}
+                    <option value="{{ lvl }}">{{ lvl }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button type="submit" class="btn btn-action">Start Game</button>
+            <a href="{{ url_for('dashboard') }}" class="btn btn-primary">Cancel</a>
+        </form>
+    </div>
+</div>
+</body>
+</html>

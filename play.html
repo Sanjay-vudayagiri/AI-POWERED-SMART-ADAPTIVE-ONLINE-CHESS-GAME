@@ -1,0 +1,119 @@
+<!-- File: templates/play.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chess AI - {{ mode|capitalize }}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="{{ url_for('static', filename='js/scripts.js') }}" defer></script>
+    <style>
+      /* Ensure the chessboard has a consistent height we can match */
+      .chessboard {
+        max-width: 600px;
+        width: 600px;  /* or set aspect-ratio */
+        aspect-ratio: 1 / 1;
+      }
+      /* This third column is the animation column;
+         we match the chessboard height, so we can center vertically. */
+      .animation-column {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        /* match board's 600px (or slightly bigger). If your board resizes, you can adjust. */
+        height: 600px;
+      }
+    </style>
+</head>
+<body>
+<div class="page-container">
+    <h1 class="page-title">Play vs AI (Level {{ level }})</h1>
+
+    <!-- 3 columns horizontally -->
+    <div style="display: flex; gap: 20px; align-items: flex-start;">
+
+        <!-- Column 1: Chessboard -->
+        <div>
+            <div class="chessboard">
+                {% for row in board_matrix %}
+                    {% set row_idx = loop.index0 %}
+                    {% for piece_symbol in row %}
+                        {% set col_idx = loop.index0 %}
+                        {% set square_color = 'light-square' if ((row_idx + col_idx) % 2 == 0) else 'dark-square' %}
+                        <div class="square {{ square_color }}"
+                             data-row="{{ row_idx }}"
+                             data-col="{{ col_idx }}"
+                             data-mode="play"
+                             onclick="handleSquareClick(this)">
+                            {% if piece_symbol %}
+                                {% set lower_symbol = piece_symbol.lower() %}
+                                {% if piece_symbol.isupper() %}
+                                    <!-- White piece -->
+                                    {% if lower_symbol == 'p' %}
+                                        <img src="{{ url_for('static', filename='images/pawn_white.png') }}">
+                                    {% elif lower_symbol == 'r' %}
+                                        <img src="{{ url_for('static', filename='images/rook_white.png') }}">
+                                    {% elif lower_symbol == 'n' %}
+                                        <img src="{{ url_for('static', filename='images/knight_white.png') }}">
+                                    {% elif lower_symbol == 'b' %}
+                                        <img src="{{ url_for('static', filename='images/bishop_white.png') }}">
+                                    {% elif lower_symbol == 'q' %}
+                                        <img src="{{ url_for('static', filename='images/queen_white.png') }}">
+                                    {% elif lower_symbol == 'k' %}
+                                        <img src="{{ url_for('static', filename='images/king_white.png') }}">
+                                    {% endif %}
+                                {% else %}
+                                    <!-- Black piece -->
+                                    {% if lower_symbol == 'p' %}
+                                        <img src="{{ url_for('static', filename='images/pawn_black.png') }}">
+                                    {% elif lower_symbol == 'r' %}
+                                        <img src="{{ url_for('static', filename='images/rook_black.png') }}">
+                                    {% elif lower_symbol == 'n' %}
+                                        <img src="{{ url_for('static', filename='images/knight_black.png') }}">
+                                    {% elif lower_symbol == 'b' %}
+                                        <img src="{{ url_for('static', filename='images/bishop_black.png') }}">
+                                    {% elif lower_symbol == 'q' %}
+                                        <img src="{{ url_for('static', filename='images/queen_black.png') }}">
+                                    {% elif lower_symbol == 'k' %}
+                                        <img src="{{ url_for('static', filename='images/king_black.png') }}">
+                                    {% endif %}
+                                {% endif %}
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Column 2: How to Move + Rules stacked vertically -->
+        <div style="display: flex; flex-direction: column; gap: 20px;">
+            <!-- Box: How to Move -->
+            <div class="move-panel card-container">
+                <h2>How to Move</h2>
+                <p>Click your piece to highlight moves, then click a highlighted square.</p>
+                <!-- No Undo in AI -->
+                <button class="btn btn-primary" onclick="resetBoard('play')">Reset Board</button>
+                <button class="btn btn-primary" onclick="history.back()">Back to Dashboard</button>
+            </div>
+            <!-- Box: Rules -->
+            <div id="piece-info-panel" class="piece-info-panel">
+                <h3>No piece selected</h3>
+            </div>
+        </div>
+
+        <!-- Column 3: AI Generated Animation, vertically centered -->
+        <div class="animation-column">
+            <div id="piece-animation-panel" class="card-container"
+                 style="display: none; text-align:center;">
+                <h2>AI Generated Animation</h2>
+                <video id="piece-animation" width="220" autoplay loop muted>
+                    <source src="" type="video/mp4" />
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>
